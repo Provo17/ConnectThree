@@ -7,15 +7,45 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // 0 = yellow, 1 = red
+
+    int activePlayer = 0;
+
+    // 2 means empty space on game
+
+    int[] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2};
+
     public void dropIn (View view) {
 
         ImageView counter = (ImageView) view;
 
-        counter.setTranslationY(-1000f);
+        counter.getTag();
 
-        counter.setImageResource(R.drawable.yellow);
+        int  counterPosition = Integer.parseInt(counter.getTag().toString());
 
-        counter.animate().translationYBy(1000f).setDuration(300);
+        if (gameState[counterPosition] == 2) {
+
+            gameState[counterPosition] = activePlayer;
+
+            counter.setTranslationY(-1000f);
+
+            if (activePlayer == 0) {
+
+                counter.setImageResource(R.drawable.yellow);
+
+                activePlayer = 1;
+
+            } else {
+
+                counter.setImageResource(R.drawable.red);
+
+                activePlayer = 0;
+
+            }
+            counter.animate().translationYBy(1000f).rotation(360).setDuration(300);
+        }
+
+
 
     }
 
